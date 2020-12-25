@@ -1,12 +1,12 @@
 #Soru 3) Bu çalışmada çıkarmak istediğimiz bilgi, günün her bir dakikası için aktif kullanıcı sayısının hesaplanması.
 ```SQL
-
+--İlk olarak view_period ve active_user_count column'larına sahip active_users tablosu oluşturuldu.
 --1.adım: 23:10:00 start_time olarak belirlendi.
 --2.adım: Yeni oluşturulan active_users tablosuna her dakikada (set ile 1 dakika ekleyerek), 5 dakikada bir aktif kullanıcı sayısı eklendi
 
-declare start_time timestamp default "2020-03-03 23:10:00";
+declare start_time timestamp default "2020-03-03 00:00:00";
 
-while start_time < "2020-03-03 23:59:00" do
+while start_time < "2020-03-04 00:00:00" do
   insert into `ceren_erdogan.active_users` (view_period, active_user_count)
     select timestamp_add(start_time,interval 5 minute) view_period,approx_count_distinct(deviceid) active_user_count 
     from ceren_erdogan.pageview
